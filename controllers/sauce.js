@@ -18,15 +18,37 @@ exports.createSauce = (req, res, next) => {
 };
 
 exports.likeImplement = (req, res, next) => {
-  Sauce.findOne({ _id: req.params.id })
+  // Recherche pour trouver la sauce en question
+    Sauce.findOne({ _id: req.params.id })
     .then(sauce => {
-      // Récupération du nombre de like de la sauce  et ajouter 1
-      const addLikes = sauce.likes + 1;
-      const addUsersLiked = sauce.usersLiked;
-      addUsersLiked.push(req.body.userId)
+      let addLikes = sauce.likes;
+      let addDislikes = sauce.dislikes;
+      let listUsersLiked = sauce.usersLiked;
+      let listUsersDisliked = sauce.usersDisliked;
+
+      // Si req.body.like = 1 ET liste des userDisliked ne contient pas le userId
+      if (req.body.like === 1 && sauce.usersDisliked.includes(req.body.userId) === false) {
+        addLikes++ ;
+        listUsersLiked.push(req.body.userId);
+      } else if (req.body.like === -1 && sauce.usersLiked.includes(req.body.userId) === false) {
+        addDislikes++ ;
+        listUsersDisliked.push(req.body.userId);
+      } else if (req.body.like === 0) {
+        if (sauce.usersLiked.includes(req.body.userId)) {
+          addLikes-- ;
+          const indexLikes = listUsersLiked.indexOf(req.body.userId)
+          listUsersLiked.splice(indexLikes,1);
+        } else {
+          addDislikes-- ;
+          const indexDislikes = listUsersDisliked.indexOf(req.body.userId)
+          listUsersDisliked.splice(indexDislikes,1);
+        }
+      }
+
+      // mise à jour de la sauce
       Sauce.updateOne({ _id: req.params.id }, 
-        { sauce, _id: req.params.id, likes: addLikes , usersLiked: addUsersLiked })
-        .then(() => res.status(200).json({ message: 'Like ajouté !'}))
+        { sauce, _id: req.params.id, likes: addLikes, dislikes: addDislikes, usersLiked: listUsersLiked, usersDisliked: listUsersDisliked })
+        .then(() => res.status(200).json({ message: 'Sauce modifée !'}))
         .catch(error => res.status(400).json({ error }));
     })
     .catch(error => res.status(400).json({ error }));
