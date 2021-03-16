@@ -10,6 +10,8 @@ const helmet = require('helmet');
 const sanitizer = require('express-html-sanitizer');
 const sanitizeReqBody = sanitizer();
 
+const session = require('cookie-session');
+
 const saucesRoutes = require('./routes/sauce');
 
 const userRoutes = require('./routes/user');
@@ -31,6 +33,19 @@ app.use((req, res, next) => {
     res.setHeader('Content-Security-Policy', "default-src 'self'");
     next();
 });
+
+// Sécurisation des cookies pour éviter le piratage de session
+const expiryDate = new Date(Date.now() + 3600000); // 1 heure (60 * 60 * 1000)
+app.use(session({
+  name: 'session',
+  secret: 'iJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1',
+  cookie: {
+    secure: true,
+    httpOnly: true,
+    domain: 'http://localhost:3000',
+    expires: expiryDate
+  }
+}));
 
 app.use(bodyParser.urlencoded({ extended: false}));
 app.use(bodyParser.json());
