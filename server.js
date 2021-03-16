@@ -37,15 +37,11 @@ const errorHandler = error => {
   }
 };
 
-// const key = fs.readFileSync(path.join(__dirname, 'certificate', 'server.key'));
-// const cert = fs.readFileSync(path.join(__dirname, 'certificate', 'server.cert'));
-
-// const options = { key, cert };
-
-const options = {
-  key: fs.readFileSync('key.pem'),
-  cert: fs.readFileSync('cert.pem')
-};
+// Pour déclarer une auto-certification - PAS BON POUR LA PRODUCTION
+// const options = {
+//   key: fs.readFileSync('key.pem'),
+//   cert: fs.readFileSync('cert.pem')
+// };
 
 const server = http.createServer(app);
 
