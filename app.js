@@ -12,12 +12,14 @@ const sanitizeReqBody = sanitizer();
 
 const session = require('cookie-session');
 
+require('dotenv').config();
+
 const saucesRoutes = require('./routes/sauce');
 
 const userRoutes = require('./routes/user');
 
 // Connexion à la BDD mongoDB
-mongoose.connect('mongodb+srv://OPCR-admin:Jirafe44!!@opcr-project6-cours1.pn325.mongodb.net/OPCR-project6-cours1?retryWrites=true&w=majority',
+mongoose.connect(process.env.mongoDB_URI,
   { useNewUrlParser: true,
     useUnifiedTopology: true })
   .then(() => console.log('Connexion à MongoDB réussie !'))
@@ -38,7 +40,7 @@ app.use((req, res, next) => {
 const expiryDate = new Date(Date.now() + 3600000); // 1 heure (60 * 60 * 1000)
 app.use(session({
   name: 'session',
-  secret: 'iJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1',
+  secret: process.env.security_cookie,
   cookie: {
     secure: true,
     httpOnly: true,
