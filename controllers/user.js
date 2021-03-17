@@ -4,6 +4,8 @@ const bcrypt = require('bcrypt');
 
 const jwt = require('jsonwebtoken');
 
+const CryptoJS = require('crypto-js');
+
 
 exports.signup = (req, res, next) => {
     bcrypt.hash(req.body.password, 10)
@@ -20,7 +22,7 @@ exports.signup = (req, res, next) => {
   };
 
 exports.login = (req, res, next) => {
-    User.findOne({ email: req.body.email })
+    User.findOne({ email : req.body.email })
     .then(user => {
         if (!user) {
             return res.status(401).json({ error: 'Utilisateur non trouvé !'});
@@ -34,7 +36,7 @@ exports.login = (req, res, next) => {
                 userId: user._id,
                 token: jwt.sign(
                     { userId: user._id },
-                    'RANDOM_TOKEN_SECRET',
+                    process.env.security_token,
                     { expiresIn: '24h'}
                 )
             });

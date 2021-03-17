@@ -1,10 +1,8 @@
 const passwordStrength = require('check-password-strength');
 
-
-module.exports = (req, res, next) => {
+passwordValidator = (req, res, next) => {
     try {
-        const newPassword = req.body.password;
-        if (passwordStrength(req.body.password).value !== 'Strong') {
+        if (passwordStrength.passwordStrength(req.body.password).id !== 3) {
             throw 'Le mot doit contenir au mois 4 caractères, 1 minuscule, 1 majuscule, 1 symbol, 1 nombre minimum';
         } else {
             next();
@@ -14,3 +12,5 @@ module.exports = (req, res, next) => {
     }
     
 };
+
+module.exports = passwordValidator;
