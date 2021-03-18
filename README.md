@@ -1,4 +1,4 @@
-# ![left 100%] Openclassrooms - Formation développeur web - projet 6 :         SO PEKOCKO
+# Openclassrooms - Formation développeur web - projet 6 :         SO PEKOCKO
 
 Mission :
 Construisez une API sécurisée pour une application d'avis gastronomiques
