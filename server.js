@@ -1,3 +1,4 @@
+// Faire un require de https pour activer https
 const http = require('http');
 const app = require('./app');
 const fs = require('fs');
@@ -43,6 +44,7 @@ const errorHandler = error => {
 //   cert: fs.readFileSync('cert.pem')
 // };
 
+// Remplacer http par https et ajouter l'objet options en paramètre pour activer le https
 const server = http.createServer(app);
 
 server.on('error', errorHandler);

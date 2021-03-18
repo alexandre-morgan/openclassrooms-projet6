@@ -1,5 +1,6 @@
 const passwordStrength = require('check-password-strength');
 
+// Middleware pour vérifier la complexité du mot passe donné lors de l'inscription
 passwordValidator = (req, res, next) => {
     try {
         if (passwordStrength.passwordStrength(req.body.password).id !== 3) {

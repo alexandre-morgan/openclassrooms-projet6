@@ -1,17 +1,21 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+
+// Pour utiliser une base de données
 const mongoose = require('mongoose');
 
 const path = require('path');
 
-// SECURITE
-const helmet = require('helmet');
-
+// packages liés à la SECURITE
+  // Setup headers
+const helmet = require('helmet'); 
+  // Traiter les données pour éviter les injections SQL
 const sanitizer = require('express-html-sanitizer');
 const sanitizeReqBody = sanitizer();
-
+// Sécurisation des cookies
 const session = require('cookie-session');
 
+// Configuration du fichier contenant les variables sensibles pour les accès et ainsi les cacher du code
 require('dotenv').config();
 
 const saucesRoutes = require('./routes/sauce');
@@ -27,7 +31,7 @@ mongoose.connect(process.env.mongoDB_URI,
 
 const app = express();
 
-// Header d'authorisation pour tous le monde
+// Header d'authorisation pour tous les utilisateurs
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
@@ -37,7 +41,7 @@ app.use((req, res, next) => {
 });
 
 // Sécurisation des cookies pour éviter le piratage de session
-const expiryDate = new Date(Date.now() + 3600000); // 1 heure (60 * 60 * 1000)
+const expiryDate = new Date(Date.now() + 60 *60 * 1000);
 app.use(session({
   name: 'session',
   secret: process.env.security_cookie,

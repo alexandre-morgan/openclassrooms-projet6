@@ -1,12 +1,11 @@
+// Importation du modele user de la base de données
 const User = require('../models/user');
-
+// Package pour crypter les password des utilisateurs et pour les comparer
 const bcrypt = require('bcrypt');
-
+// Package pour la création et la comparaison des tokens d'authentification pour les requêtes
 const jwt = require('jsonwebtoken');
 
-const CryptoJS = require('crypto-js');
-
-
+// Controller permettant de faire l'inscription d'un nouvel utilisateur
 exports.signup = (req, res, next) => {
     bcrypt.hash(req.body.password, 10)
       .then(hash => {
@@ -21,6 +20,7 @@ exports.signup = (req, res, next) => {
       .catch(error => res.status(500).json({ error }));
   };
 
+// Controller permettant de vérifier si l'email et le password correspondent à un utilisateur déjà enregistré
 exports.login = (req, res, next) => {
     User.findOne({ email : req.body.email })
     .then(user => {

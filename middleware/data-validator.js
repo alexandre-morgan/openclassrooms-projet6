@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 
 const validate = require ('mongoose-validator');
 
+// Middleware pour la validation des données reçues avant la création d'une instance de Sauce
+
 exports.nameValidator = [
     validate({
       validator: 'isLength',
@@ -13,7 +15,7 @@ exports.nameValidator = [
       //passIfEmpty: true,
       message: 'Name should contain alpha-numeric characters only',
     }),
-]
+];
 
 exports.manufacturerValidator = [
     validate({
@@ -26,7 +28,7 @@ exports.manufacturerValidator = [
       //passIfEmpty: true,
       message: 'Name should contain alpha-numeric characters only',
     }),
-]
+];
 
 exports.descriptionValidator = [
     validate({
@@ -39,7 +41,7 @@ exports.descriptionValidator = [
       //passIfEmpty: true,
       message: 'Name should contain alpha-numeric characters only',
     }),
-]
+];
 
 exports.mainPepperValidator = [
     validate({
@@ -52,12 +54,12 @@ exports.mainPepperValidator = [
       //passIfEmpty: true,
       message: 'Name should contain alpha-numeric characters only',
     }),
-]
+];
 
 exports.imageUrlValidator = [
     validate({
       validator: 'isLength',
-      arguments: [3, 150],
+      arguments: [3, 500],
       message: 'Le nom doit être entre {ARGS[0]} and {ARGS[1]} characters',
     }),
     validate({
@@ -65,4 +67,4 @@ exports.imageUrlValidator = [
       //passIfEmpty: true,
       message: 'Name should contain alpha-numeric characters only',
     }),
-]
+];

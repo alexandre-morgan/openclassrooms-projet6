@@ -2,6 +2,7 @@ const Sauce = require('../models/sauce');
 
 const fs = require('fs');
 
+// Middleware pour la création d'une instance du model Sauce et la save dans la BD
 exports.createSauce = (req, res, next) => {
   const sauceObject = JSON.parse(req.body.sauce);
     delete sauceObject._id;
@@ -16,6 +17,7 @@ exports.createSauce = (req, res, next) => {
       .catch(error => res.status(400).json({ error }));
 };
 
+// Middleware pour l'ajout ou le retrait des likes/dislikes
 exports.likeImplement = (req, res, next) => {
   // Recherche pour trouver la sauce en question
     Sauce.findOne({ _id: req.params.id })
@@ -53,6 +55,7 @@ exports.likeImplement = (req, res, next) => {
     .catch(error => res.status(400).json({ error }));
 };
 
+// Middleware de modification d'une sauce déjà créée
 exports.modifySauce = (req, res, next) => {
   const sauceObject = req.file ?
   {
@@ -64,7 +67,7 @@ exports.modifySauce = (req, res, next) => {
       .catch(error => res.status(400).json({ error }));
 };
 
-
+// Middleware de suppression d'une sauce déjà créée AVEC son image
 exports.deleteSauce = (req, res, next) => {
   Sauce.findOne({ _id: req.params.id })
     .then( sauce => {
@@ -78,12 +81,14 @@ exports.deleteSauce = (req, res, next) => {
     .catch(error => res.status(500).json({ error }));
 };
 
+// Middleware de recherche d'une sauce déjà créée avec son id
 exports.getOneSauce = (req, res, next) => {
     Sauce.findOne({ _id: req.params.id })
       .then(sauce => res.status(200).json(sauce))
       .catch(error => res.status(404).json({ error }));
 };
 
+// Middleware de recherche de toutes les sauces déjà créées
 exports.getAllSauces = (req, res, next) => {
     Sauce.find()
     .then(sauces => res.status(200).json(sauces))

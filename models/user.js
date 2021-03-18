@@ -8,6 +8,7 @@ const userSchema = mongoose.Schema({
   password: { type: String, required: true },
 });
 
+// Permet de créer des utilisateurs avec une adresse email unique
 userSchema.plugin(uniqueValidator);
 
 

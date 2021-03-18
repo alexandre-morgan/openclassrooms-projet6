@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
 
 const validate = require ('mongoose-validator');
-
+// Importation du middleware permettant de vérifier les données reçues
 const validation = require('../middleware/data-validator');
 
+// Schéma de données strictes pour une sauce
 const sauceSchema = mongoose.Schema({
   //id: { type: String, required: true }, DÉJa créé par la BDD
   userId: { type: String, },
