@@ -4,13 +4,15 @@ const User = require('../models/user');
 const bcrypt = require('bcrypt');
 // Package pour la création et la comparaison des tokens d'authentification pour les requêtes
 const jwt = require('jsonwebtoken');
+// Package de masquage pour l'email de l'utilisateur
+const MaskData = require('maskdata');
 
 // Controller permettant de faire l'inscription d'un nouvel utilisateur
 exports.signup = (req, res, next) => {
     bcrypt.hash(req.body.password, 10)
       .then(hash => {
         const user = new User({
-          email: req.body.email,
+          email: MaskData.maskEmail2(req.body.email),
           password: hash
         });
         user.save()
@@ -22,7 +24,8 @@ exports.signup = (req, res, next) => {
 
 // Controller permettant de vérifier si l'email et le password correspondent à un utilisateur déjà enregistré
 exports.login = (req, res, next) => {
-    User.findOne({ email : req.body.email })
+    const maskedEmail = MaskData.maskEmail2(req.body.email);
+    User.findOne({ email : maskedEmail })
     .then(user => {
         if (!user) {
             return res.status(401).json({ error: 'Utilisateur non trouvé !'});
