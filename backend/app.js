@@ -53,15 +53,18 @@ app.use(session({
   }
 }));
 
+// Pré-traitement de la requêtes
 app.use(bodyParser.urlencoded({ extended: false}));
 app.use(bodyParser.json());
 
+// Traitement de sécurité
 app.use(sanitizeReqBody);
 
 app.use(helmet());
 
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
+// Routes
 app.use('/api/sauces', saucesRoutes);
 
 app.use('/api/auth', userRoutes);
