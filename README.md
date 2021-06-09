@@ -13,14 +13,14 @@ NOTES :
 * Le frontend est également disponible sur ce [repo](https://github.com/OpenClassrooms-Student-Center/dwj-projet6).
 
 #### &nbsp; BACKEND :
-* Ouvrer le terminal sur ce dossier
+* Ouvrir le terminal sur ce dossier
 * Installer les dépendances à l'aide de la commande (sur le terminal) : 
 * `npm install`
 * Puis lancer le server :
 * `npm start`
 
 #### &nbsp; FRONTEND :
-* Ouvrer le terminal sur ce dossier
+* Ouvrir le terminal sur ce dossier
 * Installer les dépendances à l'aide de la commande (sur le terminal) : 
 * `npm install`
 * Installer sass :
